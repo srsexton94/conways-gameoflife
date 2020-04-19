@@ -1,3 +1,6 @@
+'user strict'
+const store = require('./store.js')
+
 // function takes in an integer and outputs a random integer between 0 & input
 const randomInt = (max) => {
   return Math.round(Math.random() * (max - 1))
@@ -18,26 +21,23 @@ const createBoard = sideLength => {
   })
   return board
 }
-// initializes a gameboard of 25 cells - NOTE: this can be altered (by user?)
-let board = createBoard(5)
-const side = board.length
 
-// function takes in a non-zero number of cells you want to select
-// and turns that many, randomly selected indices in the sub`board` to `1`
-const selectCells = num => {
+// function turns randomly selected indices in the stored `board` to `1`
+const selectCells = () => {
+  const side = store.board.length
+  // sets `num` to random # less than board area
+  // NOTE: `num` could be provided as input by user instead
+  const num = randomInt(side * side)
   for (let i = 0; i <= num; i++) {
     const row = randomInt(side)
     const cell = randomInt(side)
-    board[row][cell] = 1
+    store.board[row][cell] = 1
   }
 }
-// // initializes the board with a random number of random squares selected
-// // NOTE: input could be changed by user instead
-// selectCells(randomInt(side * side))
 
 const checkEmpty = () => {
   // flatten the board into a new array variable
-  const checkBoard = [].concat.apply([], board)
+  const checkBoard = [].concat.apply([], store.board)
   // return true if every element is 0, else return false
   return checkBoard.every(e => e === 0)
 }
@@ -45,6 +45,7 @@ const checkEmpty = () => {
 // function takes in the row & cell placement of a square and returns number
 // of live neighbors
 const liveNeighbors = (r, c) => {
+  const side = store.board.length
   let total = 0 // incrementor for live neighbors
   // initializes a 3(!) dimensional array of the row prior, during, and after
   // the input spot
@@ -71,7 +72,7 @@ const liveNeighbors = (r, c) => {
   // (ie `1`), and if so, increase the incrementor by 1
   square.forEach(row => {
     row.forEach(coord => {
-      if (board[coord[0]][coord[1]]) {
+      if (store.board[coord[0]][coord[1]]) {
         total += 1
       }
     })
@@ -81,8 +82,13 @@ const liveNeighbors = (r, c) => {
 }
 
 const next = () => {
+  // declared to new variable just for ease of writing
+  const board = store.board
+  // declares a new variable to store changes until all checks are finished
   const nextBoard = board
 
+  // for each cell of each row, determine if it should be alive or dead
+  // set its spot in nextBoard accordingly
   for (let i = 0; i < board.length; i++) {
     for (let k = 0; k < board[i].length; k++) {
       const neighbors = liveNeighbors(i, k)
@@ -99,8 +105,8 @@ const next = () => {
       }
     }
   }
-  // after all checks are complete, the board is set to it's next value
-  board = nextBoard
+  // after all checks are complete, the stored board is set to it's next value
+  store.board = nextBoard
 }
 
 // NOTE: This function would need to update the `console.log`s with changes on
@@ -108,6 +114,7 @@ const next = () => {
 // play calls `next` at least once, and continues calling `next` until the board
 // is empty (ie, contains only `0`s)
 const play = () => {
+  const board = store.board // declared to new variable just for ease of writing
   console.log('start: ', board)
   next()
   while (!checkEmpty()) {
@@ -119,5 +126,6 @@ const play = () => {
 
 module.exports = {
   createBoard,
+  selectCells,
   play
 }
