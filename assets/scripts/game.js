@@ -31,9 +31,9 @@ const selectCells = num => {
     board[row][cell] = 1
   }
 }
-// initializes the board with a random number of random squares selected
-// NOTE: input could be changed by user instead
-selectCells(randomInt(side * side))
+// // initializes the board with a random number of random squares selected
+// // NOTE: input could be changed by user instead
+// selectCells(randomInt(side * side))
 
 const checkEmpty = () => {
   // flatten the board into a new array variable
@@ -99,17 +99,16 @@ const next = () => {
       }
     }
   }
-
   // after all checks are complete, the board is set to it's next value
   board = nextBoard
 }
 
 // NOTE: This function would need to update the `console.log`s with changes on
 // the gameboard in app
-console.log('start: ', board)
 // play calls `next` at least once, and continues calling `next` until the board
 // is empty (ie, contains only `0`s)
 const play = () => {
+  console.log('start: ', board)
   next()
   while (!checkEmpty()) {
     console.log('next: ', board)
@@ -118,4 +117,7 @@ const play = () => {
   console.log('end: ', board)
 }
 
-play()
+module.exports = {
+  createBoard,
+  play
+}

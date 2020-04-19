@@ -1,0 +1,8 @@
+{{#each rows as |row|}}
+  <div class="row">
+    {{#each this}}
+      <div class="square dead col-{{12 / this.length}}">
+      </div>
+    {{/each}}
+  </div>
+{{/each}}
