@@ -1,5 +1,6 @@
 'user strict'
 const store = require('./store.js')
+const gameboardTemplate = require('./templates/gameboard.handlebars')
 
 // function takes in an integer and outputs a random integer between 0 & input
 const randomInt = (max) => {
@@ -35,6 +36,7 @@ const selectCells = () => {
   }
 }
 
+// function checks to see if the game board is all `0`s
 const checkEmpty = () => {
   // flatten the board into a new array variable
   const checkBoard = [].concat.apply([], store.board)
@@ -81,6 +83,7 @@ const liveNeighbors = (r, c) => {
   return total
 }
 
+// function progresses the game play by one frame
 const next = () => {
   // declared to new variable just for ease of writing
   const board = store.board
@@ -109,23 +112,22 @@ const next = () => {
   store.board = nextBoard
 }
 
-// NOTE: This function would need to update the `console.log`s with changes on
-// the gameboard in app
-// play calls `next` at least once, and continues calling `next` until the board
-// is empty (ie, contains only `0`s)
-const play = () => {
-  const board = store.board // declared to new variable just for ease of writing
-  console.log('start: ', board)
-  next()
-  while (!checkEmpty()) {
-    console.log('next: ', board)
-    next()
-  }
-  console.log('end: ', board)
-}
+// function calls `next` at least once, and continues calling `next` until the
+// board is empty (ie, contains only `0`s)
+// const play = () => {
+//   next()
+//   let gameboardHtml = gameboardTemplate({ rows: store.board })
+//   $('#gameboard').html(gameboardHtml)
+//   while (!checkEmpty()) {
+//     next()
+//     gameboardHtml = gameboardTemplate({ rows: store.board })
+//     $('#gameboard').html(gameboardHtml)
+//   }
+// }
 
 module.exports = {
   createBoard,
   selectCells,
-  play
+  checkEmpty,
+  next
 }

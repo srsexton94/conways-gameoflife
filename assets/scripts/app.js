@@ -25,12 +25,32 @@ $(() => {
   $('#select').on('click', () => {
     game.selectCells()
 
+    // re-renders the html in `#gameboard` after selecting cells
     const gameboardHtml = gameboardTemplate({ rows: store.board })
     $('#gameboard').html(gameboardHtml)
   })
 
-  // when a user presses play...
+  // when a user presses play... play!
   $('#play').on('click', () => {
-    console.log('play')
+    game.next()
+    const gameboardHtml = gameboardTemplate({ rows: store.board })
+    $('#gameboard').html(gameboardHtml)
+
+    // for some reason this function worked in node, but freezes the app if
+    // try and use it with the game square...
+    // remember to re-set gameboardHtml to `let` should you use this
+    // while (!game.checkEmpty()) {
+    //   game.next()
+    //   gameboardHtml = gameboardTemplate({ rows: store.board })
+    //   $('#gameboard').html(gameboardHtml)
+    // }
+  })
+
+  // when a user presses 'clear board' reset store and gameboard to all `0`s
+  $('#clear').on('click', () => {
+    const val = store.board.length
+    store.board = game.createBoard(val)
+    const gameboardHtml = gameboardTemplate({ rows: store.board })
+    $('#gameboard').html(gameboardHtml)
   })
 })
