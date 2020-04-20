@@ -20,9 +20,16 @@ $(() => {
     const gameboardHtml = gameboardTemplate({ rows: store.board })
     $('#gameboard').html(gameboardHtml)
   })
+
+  // when a user clicks the "select cells" button
   $('#select').on('click', () => {
     game.selectCells()
+
+    const gameboardHtml = gameboardTemplate({ rows: store.board })
+    $('#gameboard').html(gameboardHtml)
   })
+
+  // when a user presses play...
   $('#play').on('click', () => {
     console.log('play')
   })

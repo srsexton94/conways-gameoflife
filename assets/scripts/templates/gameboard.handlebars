@@ -1,8 +1,13 @@
 {{#each rows as |row|}}
   <div class="row">
     {{#each this}}
-      <div class="square dead col-{{1}}">
-      </div>
+      {{#if this}}
+        <div class="square alive col-{{1}}">
+        </div>
+      {{else}}
+        <div class="square dead col-{{1}}">
+        </div>
+      {{/if}}
     {{/each}}
   </div>
 {{/each}}
