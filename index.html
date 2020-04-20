@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Conways Random Game of Life</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <!-- Do not add `link` tags-->
+      <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+      <!-- Do not add `script` tags-->
+      <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
+      <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
+    </head>
+    <body>
+      <h1>Conways Random Game of Life</h1>
+      <p id="user-msg"></p>
+      <section class="controls">
+        <label>Board Side Length:
+          <input type="number" min="3" max="50" placeholder="3-50" style="width:4rem;">
+        </label>
+        <button id="select">Select Cells</button>
+        <button id="play">NEXT</button>
+        <button id="clear">Clear Board</button>
+      </section>
+      <main id="gameboard" class="gameboard container">
+      </main>
+    </body>
+</html>
